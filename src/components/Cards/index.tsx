@@ -5,8 +5,9 @@ import { NFTs } from "@/utils/types/nfts";
 import { useState, useEffect } from "react";
 import styles from "./Cards.module.scss";
 import BlueSimble from "../../../public/img/Ellipse 770.png";
-import { useDispatch } from 'react-redux';
-import { addItem, toggleCart } from '@/components/Redux/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, toggleCart, removeItem, clearCart } from '@/components/Redux/cartSlice';
+import { RootState } from "@/components/Redux/store";
 
 interface ProductProps {
   data: NFTs;
@@ -14,7 +15,12 @@ interface ProductProps {
 
 export function Cards({ data }: ProductProps) {
   const [isLoading, setIsLoading] = useState(true);
+  const [buttonText, setButtonText] = useState("Comprar");
   const dispatch = useDispatch();
+
+  // Seleciona o estado do carrinho
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const isItemInCart = cartItems.some(item => item.id === data.id.toString());
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -23,16 +29,24 @@ export function Cards({ data }: ProductProps) {
     return () => clearTimeout(timeout);
   }, []);
 
+  useEffect(() => {
+    setButtonText(isItemInCart ? "Adicionado no Carrinho" : "Comprar");
+  }, [isItemInCart]);
+
   const handleAddToCart = () => {
-    const itemToAdd = {
-      id: data.id.toString(), 
-      name: data.name,
-      price: data.price,
-      image: data.image,
-      quantity: 1,
-    };
-    dispatch(addItem(itemToAdd));
-    dispatch(toggleCart());
+    if (!isItemInCart) {
+      const itemToAdd = {
+        id: data.id.toString(), 
+        name: data.name,
+        price: data.price,
+        image: data.image,
+        quantity: 1,
+      };
+      dispatch(addItem(itemToAdd));
+      dispatch(toggleCart());
+    } else {
+      dispatch(removeItem({ id: data.id.toString() })); 
+    }
   };
 
   return (
@@ -56,7 +70,7 @@ export function Cards({ data }: ProductProps) {
         <span className={styles.cardPrice}>{data.price} ETH</span>
       </div>
       <button className={styles.addToCartButton} onClick={handleAddToCart}>
-        Comprar
+        {buttonText} 
       </button>
     </section>
   );

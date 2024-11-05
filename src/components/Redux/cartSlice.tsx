@@ -47,9 +47,12 @@ const cartSlice = createSlice({
         }
       }
 
-      
       localStorage.setItem('cartItems', JSON.stringify(state.items));
       localStorage.setItem('cartTotalAmount', JSON.stringify(state.totalAmount));
+
+      if (state.items.length === 0) {
+        cartSlice.caseReducers.resetCartItemStatus(state);
+      }
     },
     clearCart(state) {
       state.items = [];
@@ -57,14 +60,20 @@ const cartSlice = createSlice({
 
       localStorage.removeItem('cartItems');
       localStorage.removeItem('cartTotalAmount');
+      cartSlice.caseReducers.resetCartItemStatus(state);
     },
     setCartFromLocalStorage(state, action: PayloadAction<Omit<CartState, 'isOpen'>>) {
       state.items = action.payload.items;
       state.totalAmount = action.payload.totalAmount;
-      state.isOpen = false; 
-    }
+      state.isOpen = false;
+    },
+    resetCartItemStatus(state) {
+      state.items.forEach(item => {
+        item.quantity = 0; 
+      });
+    },
   },
 });
 
-export const { toggleCart, addItem, removeItem, clearCart, setCartFromLocalStorage } = cartSlice.actions;
+export const { toggleCart, addItem, removeItem, clearCart, setCartFromLocalStorage, resetCartItemStatus } = cartSlice.actions;
 export default cartSlice.reducer;
