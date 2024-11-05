@@ -2,12 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  toggleCart,
-  addItem,
-  removeItem,
-  clearCart,
-} from "@/components/Redux/cartSlice";
+import {toggleCart,addItem,removeItem,clearCart,} from "@/components/Redux/cartSlice";
 import styles from "./Cart.module.scss";
 import { CartItem } from "@/utils/types/cartItem";
 import { RootState } from "@/components/Redux/store";

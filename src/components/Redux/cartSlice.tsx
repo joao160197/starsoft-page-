@@ -1,5 +1,3 @@
-
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartItem } from '@/utils/types/cartItem';
 
@@ -31,15 +29,22 @@ const cartSlice = createSlice({
       }
       state.totalAmount += action.payload.price;
 
-      
       localStorage.setItem('cartItems', JSON.stringify(state.items));
       localStorage.setItem('cartTotalAmount', JSON.stringify(state.totalAmount));
     },
     removeItem(state, action: PayloadAction<{ id: string }>) {
       const itemIndex = state.items.findIndex(item => item.id === action.payload.id);
+
       if (itemIndex >= 0) {
-        state.totalAmount -= state.items[itemIndex].price * state.items[itemIndex].quantity;
-        state.items.splice(itemIndex, 1);
+        const item = state.items[itemIndex];
+
+        if (item.quantity > 1) {
+          item.quantity -= 1;
+          state.totalAmount -= item.price;
+        } else {
+          state.totalAmount -= item.price;
+          state.items.splice(itemIndex, 1);
+        }
       }
 
       
@@ -50,7 +55,6 @@ const cartSlice = createSlice({
       state.items = [];
       state.totalAmount = 0;
 
-      
       localStorage.removeItem('cartItems');
       localStorage.removeItem('cartTotalAmount');
     },

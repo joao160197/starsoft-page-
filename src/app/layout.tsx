@@ -10,6 +10,7 @@ import "./globals.css";
 import { store } from "@/components/Redux/store";
 import Cart from "@/components/Cart";
 import LoadCartFromLocalStorage from '@/components/LoadCartFromLocalStorage';
+import { Footer } from "@/components/Footer";
 
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ export default function RootLayout({
               <Cart />
               <LoadCartFromLocalStorage />
               {children}
+              <Footer/>
             </Providers>
           </Provider>
           <ReactQueryDevtools initialIsOpen={false} />

@@ -3,12 +3,12 @@
 import { motion } from "framer-motion";
 import styles from "./Button.module.scss";
 
-interface AnimatedButtonProps {
+interface AnimatedButton {
   onClick: () => void; 
   text: string; 
 }
 
-export function AnimatedButton({ onClick, text }: AnimatedButtonProps) {
+export function AnimatedButton({ onClick, text }: AnimatedButton) {
   return (
     <section className={styles.ButtonContainer}>
       <div className={styles.AnimatedButton}>

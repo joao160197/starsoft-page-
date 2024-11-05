@@ -107,12 +107,16 @@
     &:hover {
       background-color: #a75a13;
     }
+    
   }
 
-  
   @media (max-width: 768px) {
     width: 100%; 
     padding: 15px;
+
+    &:hover{
+      transform:none;
+    }
   }
 
   @media (max-width: 480px) {
