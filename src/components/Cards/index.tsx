@@ -17,8 +17,6 @@ export function Cards({ data }: ProductProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [buttonText, setButtonText] = useState("Comprar");
   const dispatch = useDispatch();
-
-  // Seleciona o estado do carrinho
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const isItemInCart = cartItems.some(item => item.id === data.id.toString());
 

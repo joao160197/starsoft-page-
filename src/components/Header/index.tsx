@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +22,7 @@ export function Header() {
   return (
     <header className="header">
       <div className="header__container">
-        <Link href="/" className="header__title">
+        <Link href="" className="header__title">
           <Image src={logo} alt="Logo" width={120} height={50} /> 
         </Link>
 
