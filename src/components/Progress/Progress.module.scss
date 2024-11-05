@@ -1,0 +1,23 @@
+.progress-container {
+    margin-top: 50px !important;
+    background-color: #393939;
+    border-radius: 8px;
+    height: 10px;
+    width: 30%;
+    margin: 10px auto; 
+  }
+  
+  .progress-bar {
+    background-color: #FF8310;
+    height: 100%;
+    border-radius: 8px;
+  }
+  
+  
+  @media (max-width: 768px) {
+    .progress-container {
+      width: 80%; 
+      margin-top: 20px; 
+    }
+  }
+  
